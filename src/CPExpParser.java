@@ -17,8 +17,8 @@ public class CPExpParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		Identifier=10, Int10=11, Int8=12, Int16=13, ADD=14, SUB=15, MUL=16, DIV=17, 
-		GT=18, LT=19, EQ=20, WhiteSpace=21;
+		T__9=10, Identifier=11, Int10=12, Int8=13, Int16=14, ADD=15, SUB=16, MUL=17, 
+		DIV=18, GT=19, LT=20, EQ=21, WhiteSpace=22;
 	public static final int
 		RULE_program = 0, RULE_statement = 1, RULE_condition = 2, RULE_expression = 3, 
 		RULE_integer = 4;
@@ -31,15 +31,15 @@ public class CPExpParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'if'", "'then'", "'else'", "'while'", "'do'", "'{'", "'}'", "'('", 
-			"')'", null, null, null, null, "'+'", "'-'", "'*'", "'/'", "'>'", "'<'", 
-			"'='"
+			null, "';'", "'if'", "'then'", "'else'", "'while'", "'do'", "'{'", "'}'", 
+			"'('", "')'", null, null, null, null, "'+'", "'-'", "'*'", "'/'", "'>'", 
+			"'<'", "'='"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, "Identifier", 
+			null, null, null, null, null, null, null, null, null, null, null, "Identifier", 
 			"Int10", "Int8", "Int16", "ADD", "SUB", "MUL", "DIV", "GT", "LT", "EQ", 
 			"WhiteSpace"
 		};
@@ -133,7 +133,7 @@ public class CPExpParser extends Parser {
 				setState(13); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__3) | (1L << T__5) | (1L << Identifier))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << Identifier))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -218,7 +218,7 @@ public class CPExpParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_statement);
 		try {
-			setState(35);
+			setState(37);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Identifier:
@@ -231,58 +231,60 @@ public class CPExpParser extends Parser {
 				match(EQ);
 				setState(17);
 				expression(0);
+				setState(18);
+				match(T__0);
 				}
 				break;
-			case T__0:
+			case T__1:
 				_localctx = new IfContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(18);
-				match(T__0);
-				setState(19);
-				condition();
 				setState(20);
 				match(T__1);
 				setState(21);
+				condition();
+				setState(22);
+				match(T__2);
+				setState(23);
 				statement();
-				setState(24);
+				setState(26);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 				case 1:
 					{
-					setState(22);
-					match(T__2);
-					setState(23);
+					setState(24);
+					match(T__3);
+					setState(25);
 					statement();
 					}
 					break;
 				}
 				}
 				break;
-			case T__3:
+			case T__4:
 				_localctx = new WhileContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(26);
-				match(T__3);
-				setState(27);
-				condition();
 				setState(28);
 				match(T__4);
 				setState(29);
+				condition();
+				setState(30);
+				match(T__5);
+				setState(31);
 				statement();
 				}
 				break;
-			case T__5:
+			case T__6:
 				_localctx = new BlockContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(31);
-				match(T__5);
-				setState(32);
-				program();
 				setState(33);
 				match(T__6);
+				setState(34);
+				program();
+				setState(35);
+				match(T__7);
 				}
 				break;
 			default:
@@ -329,9 +331,9 @@ public class CPExpParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(37);
+			setState(39);
 			expression(0);
-			setState(38);
+			setState(40);
 			((ConditionContext)_localctx).op = _input.LT(1);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << GT) | (1L << LT) | (1L << EQ))) != 0)) ) {
@@ -342,7 +344,7 @@ public class CPExpParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(39);
+			setState(41);
 			expression(0);
 			}
 		}
@@ -450,7 +452,7 @@ public class CPExpParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(50);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Int10:
@@ -461,7 +463,7 @@ public class CPExpParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(42);
+				setState(44);
 				integer();
 				}
 				break;
@@ -470,28 +472,28 @@ public class CPExpParser extends Parser {
 				_localctx = new IDNExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(43);
+				setState(45);
 				match(Identifier);
 				}
 				break;
-			case T__7:
+			case T__8:
 				{
 				_localctx = new ParenExprContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(44);
-				match(T__7);
-				setState(45);
-				expression(0);
 				setState(46);
 				match(T__8);
+				setState(47);
+				expression(0);
+				setState(48);
+				match(T__9);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(58);
+			setState(60);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -499,16 +501,16 @@ public class CPExpParser extends Parser {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(56);
+					setState(58);
 					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 					case 1:
 						{
 						_localctx = new HighArithExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(50);
+						setState(52);
 						if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-						setState(51);
+						setState(53);
 						((HighArithExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==MUL || _la==DIV) ) {
@@ -519,7 +521,7 @@ public class CPExpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(52);
+						setState(54);
 						expression(3);
 						}
 						break;
@@ -527,9 +529,9 @@ public class CPExpParser extends Parser {
 						{
 						_localctx = new LowArithExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
-						setState(53);
+						setState(55);
 						if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-						setState(54);
+						setState(56);
 						((LowArithExprContext)_localctx).op = _input.LT(1);
 						_la = _input.LA(1);
 						if ( !(_la==ADD || _la==SUB) ) {
@@ -540,14 +542,14 @@ public class CPExpParser extends Parser {
 							_errHandler.reportMatch(this);
 							consume();
 						}
-						setState(55);
+						setState(57);
 						expression(2);
 						}
 						break;
 					}
 					} 
 				}
-				setState(60);
+				setState(62);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,5,_ctx);
 			}
@@ -607,14 +609,14 @@ public class CPExpParser extends Parser {
 		IntegerContext _localctx = new IntegerContext(_ctx, getState());
 		enterRule(_localctx, 8, RULE_integer);
 		try {
-			setState(64);
+			setState(66);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case Int10:
 				_localctx = new Int10PContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(61);
+				setState(63);
 				match(Int10);
 				}
 				break;
@@ -622,7 +624,7 @@ public class CPExpParser extends Parser {
 				_localctx = new Int8PContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(62);
+				setState(64);
 				match(Int8);
 				}
 				break;
@@ -630,7 +632,7 @@ public class CPExpParser extends Parser {
 				_localctx = new Int16PContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(63);
+				setState(65);
 				match(Int16);
 				}
 				break;
@@ -667,25 +669,25 @@ public class CPExpParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27E\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\30G\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\6\2\16\n\2\r\2\16\2\17\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\3\5\3\33\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5"+
-		"\3&\n\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\63\n\5\3\5\3\5"+
-		"\3\5\3\5\3\5\3\5\7\5;\n\5\f\5\16\5>\13\5\3\6\3\6\3\6\5\6C\n\6\3\6\2\3"+
-		"\b\7\2\4\6\b\n\2\5\3\2\24\26\3\2\22\23\3\2\20\21\2J\2\r\3\2\2\2\4%\3\2"+
-		"\2\2\6\'\3\2\2\2\b\62\3\2\2\2\nB\3\2\2\2\f\16\5\4\3\2\r\f\3\2\2\2\16\17"+
-		"\3\2\2\2\17\r\3\2\2\2\17\20\3\2\2\2\20\3\3\2\2\2\21\22\7\f\2\2\22\23\7"+
-		"\26\2\2\23&\5\b\5\2\24\25\7\3\2\2\25\26\5\6\4\2\26\27\7\4\2\2\27\32\5"+
-		"\4\3\2\30\31\7\5\2\2\31\33\5\4\3\2\32\30\3\2\2\2\32\33\3\2\2\2\33&\3\2"+
-		"\2\2\34\35\7\6\2\2\35\36\5\6\4\2\36\37\7\7\2\2\37 \5\4\3\2 &\3\2\2\2!"+
-		"\"\7\b\2\2\"#\5\2\2\2#$\7\t\2\2$&\3\2\2\2%\21\3\2\2\2%\24\3\2\2\2%\34"+
-		"\3\2\2\2%!\3\2\2\2&\5\3\2\2\2\'(\5\b\5\2()\t\2\2\2)*\5\b\5\2*\7\3\2\2"+
-		"\2+,\b\5\1\2,\63\5\n\6\2-\63\7\f\2\2./\7\n\2\2/\60\5\b\5\2\60\61\7\13"+
-		"\2\2\61\63\3\2\2\2\62+\3\2\2\2\62-\3\2\2\2\62.\3\2\2\2\63<\3\2\2\2\64"+
-		"\65\f\4\2\2\65\66\t\3\2\2\66;\5\b\5\5\678\f\3\2\289\t\4\2\29;\5\b\5\4"+
-		":\64\3\2\2\2:\67\3\2\2\2;>\3\2\2\2<:\3\2\2\2<=\3\2\2\2=\t\3\2\2\2><\3"+
-		"\2\2\2?C\7\r\2\2@C\7\16\2\2AC\7\17\2\2B?\3\2\2\2B@\3\2\2\2BA\3\2\2\2C"+
-		"\13\3\2\2\2\t\17\32%\62:<B";
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\35\n\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\5\3(\n\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\65\n\5"+
+		"\3\5\3\5\3\5\3\5\3\5\3\5\7\5=\n\5\f\5\16\5@\13\5\3\6\3\6\3\6\5\6E\n\6"+
+		"\3\6\2\3\b\7\2\4\6\b\n\2\5\3\2\25\27\3\2\23\24\3\2\21\22\2L\2\r\3\2\2"+
+		"\2\4\'\3\2\2\2\6)\3\2\2\2\b\64\3\2\2\2\nD\3\2\2\2\f\16\5\4\3\2\r\f\3\2"+
+		"\2\2\16\17\3\2\2\2\17\r\3\2\2\2\17\20\3\2\2\2\20\3\3\2\2\2\21\22\7\r\2"+
+		"\2\22\23\7\27\2\2\23\24\5\b\5\2\24\25\7\3\2\2\25(\3\2\2\2\26\27\7\4\2"+
+		"\2\27\30\5\6\4\2\30\31\7\5\2\2\31\34\5\4\3\2\32\33\7\6\2\2\33\35\5\4\3"+
+		"\2\34\32\3\2\2\2\34\35\3\2\2\2\35(\3\2\2\2\36\37\7\7\2\2\37 \5\6\4\2 "+
+		"!\7\b\2\2!\"\5\4\3\2\"(\3\2\2\2#$\7\t\2\2$%\5\2\2\2%&\7\n\2\2&(\3\2\2"+
+		"\2\'\21\3\2\2\2\'\26\3\2\2\2\'\36\3\2\2\2\'#\3\2\2\2(\5\3\2\2\2)*\5\b"+
+		"\5\2*+\t\2\2\2+,\5\b\5\2,\7\3\2\2\2-.\b\5\1\2.\65\5\n\6\2/\65\7\r\2\2"+
+		"\60\61\7\13\2\2\61\62\5\b\5\2\62\63\7\f\2\2\63\65\3\2\2\2\64-\3\2\2\2"+
+		"\64/\3\2\2\2\64\60\3\2\2\2\65>\3\2\2\2\66\67\f\4\2\2\678\t\3\2\28=\5\b"+
+		"\5\59:\f\3\2\2:;\t\4\2\2;=\5\b\5\4<\66\3\2\2\2<9\3\2\2\2=@\3\2\2\2><\3"+
+		"\2\2\2>?\3\2\2\2?\t\3\2\2\2@>\3\2\2\2AE\7\16\2\2BE\7\17\2\2CE\7\20\2\2"+
+		"DA\3\2\2\2DB\3\2\2\2DC\3\2\2\2E\13\3\2\2\2\t\17\34\'\64<>D";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

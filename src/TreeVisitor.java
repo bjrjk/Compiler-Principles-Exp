@@ -23,13 +23,11 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 		String ECode = visit(E);
 		String id = ctx.Identifier().getText();
 		String LocalCode = String.format("%s := %s\n", id, StorageMgr.get(E));
-		return ECode+LocalCode;
+		return ECode + LocalCode;
 	}
-
 
 	@Override
 	public String visitIf(CPExpParser.IfContext ctx) {
-		
 		String conditionCode = visit(ctx.condition());
 		String statementCode = visit(ctx.statement(0));
 		String elseCode = "";
@@ -45,15 +43,12 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 		return conditionCode + jmpCode + statementCode + thenJmpCode + 
 				String.format("%s:\n", jmpLbl) + elseCode +
 				String.format("%s:\n", finishLbl);
-		
 	}
-
 
 	@Override
 	public String visitWhile(CPExpParser.WhileContext ctx) {
 		String conditionCode = visit(ctx.condition());
 		String statementCode = visit(ctx.statement());
-		
 		String beginLbl = LabelCounter.getNewLabelID();
 		String finishLbl = LabelCounter.getNewLabelID();
 		String jmpCode = String.format("if %s = 0 goto %s\n", 
@@ -64,17 +59,14 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 				String.format("%s:\n", finishLbl);
 	}
 
-	
 	@Override
 	public String visitBlock(CPExpParser.BlockContext ctx) {
 		String code = visit(ctx.program());
 		return code;
 	}
 
-
 	@Override
 	public String visitCondition(CPExpParser.ConditionContext ctx) {
-		
 		String tmpVarName = VariableCounter.getNewVarID();
 		StorageMgr.put(ctx, tmpVarName);
 		ParserRuleContext E1 = ctx.expression().get(0), E2 = ctx.expression().get(1);
@@ -86,14 +78,12 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 		return E1Code + E2Code + LocalCode;	
 	}
 
-
 	@Override
 	public String visitIDNExpr(CPExpParser.IDNExprContext ctx) {
 		String idnLiteral = ctx.Identifier().getText();
 		StorageMgr.put(ctx, idnLiteral);
 		return "";
 	}
-
 
 	@Override
 	public String visitLowArithExpr(CPExpParser.LowArithExprContext ctx) {
@@ -108,14 +98,12 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 		return E1Code + E2Code + LocalCode;
 	}
 
-
 	@Override
 	public String visitIntExpr(CPExpParser.IntExprContext ctx) {
 		String intLiteral = visit(ctx.integer());
 		StorageMgr.put(ctx, intLiteral);
 		return "";
 	}
-
 
 	@Override
 	public String visitParenExpr(CPExpParser.ParenExprContext ctx) {

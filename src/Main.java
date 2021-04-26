@@ -11,10 +11,12 @@ public class Main {
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+		if(args.length != 1) {
+			System.err.println("No filename specified.");
+			System.exit(1);
+		}
 		TreeVisitor HLLvisitor = new TreeVisitor();
-		//FileInputStream f = new FileInputStream("test.txt");
-		String f="while x<9 do {if b=1+4 then A=9/2 else c=9*n}";
+		FileInputStream f = new FileInputStream(args[0]);
 		ANTLRInputStream HLLInput = new ANTLRInputStream(f);
 		CPExpLexer HLLLexer = new CPExpLexer(HLLInput);
 		CommonTokenStream HLLTokens = new CommonTokenStream(HLLLexer);
@@ -24,10 +26,7 @@ public class Main {
 			System.exit(1);
 		}
 		ParseTree HLLTree = HLLParser.program();
-		String result = HLLvisitor.visit(HLLTree);	
-		//HLLvisitor.visit(HLLTree);	
+		String result = HLLvisitor.visit(HLLTree);		
 		System.out.println(result);
-		
 	}
-
 }

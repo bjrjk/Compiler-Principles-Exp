@@ -1,7 +1,7 @@
 grammar CPExp;
 
 program: 		statement+;
-statement: 		Identifier '=' expression 												# Assign
+statement: 		Identifier '=' expression ';'											# Assign
 		 |		'if' condition 'then' statement	('else' statement)?						# If
 		 |		'while' condition 'do' statement										# While
 		 |		'{' program '}'															# Block
