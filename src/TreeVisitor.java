@@ -19,13 +19,17 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 
 	@Override
 	public String visitAssign(CPExpParser.AssignContext ctx) {
-		//TODO
-		return visitChildren(ctx);
+		ParserRuleContext E = ctx.expression();
+		String ECode = visit(E);
+		String id = ctx.Identifier().getText();
+		String LocalCode = String.format("%s := %s\n", id, StorageMgr.get(E));
+		return ECode+LocalCode;
 	}
 
 
 	@Override
 	public String visitIf(CPExpParser.IfContext ctx) {
+		
 		String conditionCode = visit(ctx.condition());
 		String statementCode = visit(ctx.statement(0));
 		String elseCode = "";
@@ -41,48 +45,67 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 		return conditionCode + jmpCode + statementCode + thenJmpCode + 
 				String.format("%s:\n", jmpLbl) + elseCode +
 				String.format("%s:\n", finishLbl);
+		
 	}
 
 
 	@Override
 	public String visitWhile(CPExpParser.WhileContext ctx) {
-		//TODO
-		return visitChildren(ctx);
+		String conditionCode = visit(ctx.condition());
+		String statementCode = visit(ctx.statement());
+		
+		String beginLbl = LabelCounter.getNewLabelID();
+		String finishLbl = LabelCounter.getNewLabelID();
+		String jmpCode = String.format("if %s = 0 goto %s\n", 
+				StorageMgr.get(ctx.condition()), finishLbl);
+		String JmpBegin = String.format("goto %s\n", 
+				beginLbl);
+		return  String.format("%s:\n", beginLbl) + conditionCode + jmpCode + statementCode + JmpBegin + 
+				String.format("%s:\n", finishLbl);
 	}
 
 	
 	@Override
 	public String visitBlock(CPExpParser.BlockContext ctx) {
-		//TODO
-		return visitChildren(ctx);
+		String code = visit(ctx.program());
+		return code;
 	}
 
 
 	@Override
 	public String visitCondition(CPExpParser.ConditionContext ctx) {
+		
 		String tmpVarName = VariableCounter.getNewVarID();
 		StorageMgr.put(ctx, tmpVarName);
 		ParserRuleContext E1 = ctx.expression().get(0), E2 = ctx.expression().get(1);
 		String E1Code = visit(E1);
 		String E2Code = visit(E2);
-		String LocalCode = String.format("%s := %s %c %s\n", 
+		String LocalCode = String.format("%s := %s %s %s\n", 
 				tmpVarName, StorageMgr.get(E1), ctx.op.getText(), StorageMgr.get(E2)
 				);
-		return E1Code + E2Code + LocalCode;
+		return E1Code + E2Code + LocalCode;	
 	}
 
 
 	@Override
 	public String visitIDNExpr(CPExpParser.IDNExprContext ctx) {
-		//TODO
-		return visitChildren(ctx);
+		String idnLiteral = ctx.Identifier().getText();
+		StorageMgr.put(ctx, idnLiteral);
+		return "";
 	}
 
 
 	@Override
 	public String visitLowArithExpr(CPExpParser.LowArithExprContext ctx) {
-		//TODO
-		return visitChildren(ctx);
+		String tmpVarName = VariableCounter.getNewVarID();
+		StorageMgr.put(ctx, tmpVarName);
+		ParserRuleContext E1 = ctx.expression().get(0), E2 = ctx.expression().get(1);
+		String E1Code = visit(E1);
+		String E2Code = visit(E2);
+		String LocalCode = String.format("%s := %s %s %s\n", 
+				tmpVarName, StorageMgr.get(E1), ctx.op.getText(), StorageMgr.get(E2)
+				);
+		return E1Code + E2Code + LocalCode;
 	}
 
 
@@ -108,7 +131,7 @@ public class TreeVisitor extends CPExpBaseVisitor<String> {
 		ParserRuleContext E1 = ctx.expression().get(0), E2 = ctx.expression().get(1);
 		String E1Code = visit(E1);
 		String E2Code = visit(E2);
-		String LocalCode = String.format("%s := %s %c %s\n", 
+		String LocalCode = String.format("%s := %s %s %s\n", 
 				tmpVarName, StorageMgr.get(E1), ctx.op.getText(), StorageMgr.get(E2)
 				);
 		return E1Code + E2Code + LocalCode;
