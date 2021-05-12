@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -9,6 +10,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class Main {
 
+	public static void WriteTXT(String s, String path) throws IOException {
+		FileWriter f = new FileWriter(path);
+		f.write(s);
+		f.flush();
+		f.close();
+	}
+	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		if(args.length != 1) {
@@ -28,5 +36,6 @@ public class Main {
 		ParseTree HLLTree = HLLParser.program();
 		String result = HLLvisitor.visit(HLLTree);		
 		System.out.println(result);
+		WriteTXT(result, "Output.txt");
 	}
 }
